@@ -8,31 +8,32 @@ import java.io.*;
  */
 public class Display {
 
-    public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws IOException {
 
-	String tspFile     = args[0];
-	String tourFile    = args[1];
-	TSP tsp            = new TSP(tspFile);
-        int n              = tsp.size();
-	int[] tour         = new int[n];
-	int[] occurs       = new int[n];
-	Scanner sc         = new Scanner(new File(tourFile));
+    String tspFile     = args[0];
+	  String tourFile    = args[1];
+	  TSP tsp            = new TSP(tspFile);
+    int n              = tsp.size();
+	  int[] tour         = new int[n];
+	  int[] occurs       = new int[n];
+	  Scanner sc         = new Scanner(new File(tourFile));
 
-	for (int i=0;i<n;i++){
-	    tour[i] = sc.nextInt();
+    for (int i=0;i<n;i++){
+      tour[i] = sc.nextInt();
 	    if (tour[i] < 0 || tour[i] >= n) throw new TSPException("Not a tour: city out of range");
 	    occurs[tour[i]]++;
-	}
-	sc.close();
-	for (int i=0;i<n;i++){
-	    if (occurs[i] == 0) throw new TSPException("Not a tour: city ommision");
-	    if (occurs[i] > 1) throw new TSPException("Not a tour: city duplicated");
-	}
-
-	tsp.plot(tour);
-	sc = new Scanner(System.in);
-	System.out.print("q to quit> ");
-	sc.next();
-	System.exit(0);
     }
+
+    sc.close();
+    for (int i=0;i<n;i++){
+      if (occurs[i] == 0) throw new TSPException("Not a tour: city ommision");
+	    if (occurs[i] > 1) throw new TSPException("Not a tour: city duplicated");
+    }
+
+    tsp.plot(tour);
+	  sc = new Scanner(System.in);
+	  System.out.print("q to quit> ");
+	  sc.next();
+	  System.exit(0);
+  }
 }
