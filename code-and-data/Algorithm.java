@@ -6,6 +6,12 @@ public abstract class Algorithm{
   public Algorithm(Point[] points){
     this.path = new Path(points);
   }
+  public Path getPath(){
+    return this.path();
+  }
+  public void setPath(Path path){
+    this.path = path;
+  }
   public abstract void RunAlgorithm();
   
   //We should be able to implement this here rather than wasting time at each time
