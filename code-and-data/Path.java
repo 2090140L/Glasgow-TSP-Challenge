@@ -5,6 +5,8 @@ public class Path{
   }
   public Point[] getPoints(){
     return this.path;
+
+
   }
   public double getDistance(){
     double d = 0;
@@ -15,6 +17,15 @@ public class Path{
   }
   public Point getPoint(int i){
       return path[i];
+  }
+
+  public void setPoint(int i, Point newPoint){
+    path[i] = newPoint;
+  }
+
+  //Retrieve the size of the Path - Alex.
+  public int PathSize(){
+      return path.length();
   }
 }
 
