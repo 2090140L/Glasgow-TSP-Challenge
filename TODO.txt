@@ -1,0 +1,32 @@
+Point: 
+  x - double
+  y - double 
+  getPoint(): double[2]
+  getDistance(Point): double
+
+Path: 
+  Points
+  getPoints() Point[]
+  getPoint(int pos) Point
+
+
+
+Algorithm (abstract class): 
+  Path
+  runAlgorithm() void
+  save() 
+  runNTimes(long n) void
+
+
+
+FileReader:
+  read(String file)
+  Save(Path p, String file)
+  
+
+Main:
+  main(String args[])
+
+
+Paterface: 
+  call patrick's API
