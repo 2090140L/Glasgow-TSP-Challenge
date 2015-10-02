@@ -6,10 +6,10 @@ public abstract class Algorithm{
   public Algorithm(Point[] points){
     this.path = new Path(points);
   }
-  public void RunAlgorithm(){}
+  public abstract void RunAlgorithm();
   
   //We should be able to implement this here rather than wasting time at each time
   public void Save(){ 
   }
-  public void RunNTimes(long n){}
+  public abstract void RunNTimes(long n);
 }
