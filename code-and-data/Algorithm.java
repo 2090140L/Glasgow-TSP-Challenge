@@ -7,8 +7,9 @@ public abstract class Algorithm{
     this.path = new Path(points);
   }
   public void RunAlgorithm(){}
-  public void Save(){
-    //We should be able to implement this here rather than wasting time at each time
+  
+  //We should be able to implement this here rather than wasting time at each time
+  public void Save(){ 
   }
   public void RunNTimes(long n){}
 }
