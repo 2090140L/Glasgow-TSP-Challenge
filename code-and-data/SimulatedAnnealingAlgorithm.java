@@ -20,13 +20,13 @@ public class SimulatedAnnealingAlgorithm extends Algorithm {
 		super(p);
 	}
 
-	Path bestPath = new Path("TO BE FILLED IN"); //!!!!!!!!!!!
+	Path bestPath = new Path(path); //!!!!!!!!!!!
 
 	//initialize initial solution
 	public static void RunAlgorithm(){
 		while(temp>1){
 			
-			Path comparisonPath = new Path("TO BE FILLED IN"); //!!!!!!!!!!!
+			Path comparisonPath = new Path(path); //!!!!!!!!!!!
 			
 			//get random positions in the path
 			int pointPos1 = (int) (comparisonPath.pathSize() * Math.random());
@@ -50,9 +50,10 @@ public class SimulatedAnnealingAlgorithm extends Algorithm {
 			}
 
 			if (path.getDistance() < best.getDistance()){
-				best = new Path("TO BE FILLED IN") //!!!!!!! 
+				best = new Path(path) //!!!!!!! 
 			}
 		}
+		
 	//Cooldown
 	temp *= (1-coolingRate);
 	
