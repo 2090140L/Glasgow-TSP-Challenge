@@ -4,7 +4,7 @@ public class ScrubAlgorithm extends Algorithm{
   public ScrubAlgorithm(Path p){
     super(p);
   }
-  public ScrubAlgorithm(Points[] p){
+  public ScrubAlgorithm(Point[] p){
     super(p);
   }
   public void RunAlgorithm(){
@@ -22,46 +22,46 @@ public class ScrubAlgorithm extends Algorithm{
     }
     x /= path.pathSize();
     y /= path.pathSize();
-    return new Point(x,y,null)
+    return new Point(x,y,-1);
   }
   public Path Scrub(Path p){
     Path p1 = null;
     Path p2 = null;
     Path p3 = null;
-    if(p.getLength() > 3){
+    if(p.pathSize() > 3){
       Point origin = getOrigin(p);
       Point top = getTop(p);
       Point right = getRight(p);
       ArrayList<Point> pl1 = new ArrayList<Point>();
       ArrayList<Point> pl2 = new ArrayList<Point>();
       ArrayList<Point> pl3 = new ArrayList<Point>();
-      pl1.append(origin);
-      pl2.append(top);
-      pl3.append(right);
-      for(Point point : p){
-        if(point.getID() != origin.getID() && point.getID() != top.getID() && point.getID != right.getID()){
-          double d1 = p.getDistance(pl1.get(0));
-          double d2 = p.getDistance(pl2.get(0));
-          double d3 = p.getDistance(pl3.get(0));
-          if(d0 >= d2 && d1 >= d2){
-            pl1.append(point);
+      pl1.add(origin);
+      pl2.add(top);
+      pl3.add(right);
+      for(Point point : p.getPoints()){
+        if(point.getID() != origin.getID() && point.getID() != top.getID() && point.getID() != right.getID()){
+          double d1 = point.getDistance(pl1.get(0));
+          double d2 = point.getDistance(pl2.get(0));
+          double d3 = point.getDistance(pl3.get(0));
+          if(d1 >= d2 && d1 >= d3){
+            pl1.add(point);
           } else if(d2 >= d1 && d2 >= d3){
-            pl2.append(point);
+            pl2.add(point);
           } else{
-            pl3.append(point);
+            pl3.add(point);
           }
         }
       }
-      p1 = Scrub(new Path(pl1.toArray());
-      p2 = Scrub(new Path(pl2.toArray());
-      p3 = Scrub(new Path(pl3.toArray());
+      p1 = Scrub(new Path(pl1));
+      p2 = Scrub(new Path(pl2));
+      p3 = Scrub(new Path(pl3));
     } else {
-      p1 = new Path(new Point[] {p.getPoints[0]});
-      if(p.getSize() > 1){
-        p2 = new Path(new Point[] {p.getPoints[1]});
+      p1 = new Path(new Point[] {p.getPoints()[0]});
+      if(p.pathSize() > 1){
+        p2 = new Path(new Point[] {p.getPoints()[1]});
       }
       if(p.pathSize() > 2){
-        p3 = new Path(new Point[] {p.getPoints[2]});
+        p3 = new Path(new Point[] {p.getPoints()[2]});
       }
     }
     if( p2 == null){
@@ -92,30 +92,30 @@ public class ScrubAlgorithm extends Algorithm{
       return pa;
     }
   }
-  public pathJoin(Path p1, Path p2){
+  public Path pathJoin(Path p1, Path p2){
     Point initial1 = getCenter(p1);
     Point initial2 = p2.getPoint(0);
-    for(Point p : p2){
-      if(p.getDistance(initial1) > intital2.getDistance(initial1)){
+    for(Point p : p2.getPoints()){
+      if(p.getDistance(initial1) > initial2.getDistance(initial1)){
         initial2 = p;
       }
     }
     Point second1 = p1.getPoint(0);
-    for(Point p : p1){
+    for(Point p : p1.getPoints()){
       if(p.getDistance(initial2) > second1.getDistance(initial2)){
         second1 = p;
       }
     }
     Point second2 = initial2;
-    for(Point p : p2){
-      if(p.getDistance(second1) > second2.getDistance(second1){
+    for(Point p : p2.getPoints()){
+      if(p.getDistance(second1) > second2.getDistance(second1)){
         second2 = p;
       }
     }
     Path tmp1 = cycle(p1, second1);
     Path tmp2 = cycle(p2, second2);
-    tmp1 = cycle(tmp1, tmp1.getPoint(tmp1.pathSize() - 1);
-    Point[p1.pathSize() + p2.pathSize()] ret = new Point[];
+    tmp1 = cycle(tmp1, tmp1.getPoint(tmp1.pathSize() - 1));
+    Point[] ret = new Point[p1.pathSize() + p2.pathSize()];
     int count = 0;
     for(Point p : tmp1.getPoints()){
       ret[count] = p;
@@ -125,15 +125,15 @@ public class ScrubAlgorithm extends Algorithm{
       ret[count] = p;
       count ++;
     }
-    return ret;
+    return new Path(ret);
   }
-  Public cycle(Path path, Point point){
-    Point[path.getSize()] newPath = new Point[];
+  public Path cycle(Path path, Point point){
+    Point[] newPath = new Point[path.pathSize()];
     int end = 0;
     boolean found = false;
     int count = 0;
     for(Point p : path.getPoints()){
-      if(p.getID() == point.getID(){
+      if(p.getID() == point.getID()){
         found = true;
       }
       if(! found){
@@ -149,7 +149,7 @@ public class ScrubAlgorithm extends Algorithm{
     return new Path(newPath);
   }
   public Point getOrigin(Path path){
-    Point O = new Point(0,0,null);
+    Point O = new Point(0,0,-1);
     Point ret = null;
     for(Point p : path.getPoints()){
       double d = p.getDistance(O);
@@ -163,18 +163,18 @@ public class ScrubAlgorithm extends Algorithm{
     return ret;
   }
   public Point getTop(Path path){
-    Point top = new Point(0,0,null);
+    Point top = new Point(0,0,-1);
     for(Point p : path.getPoints()){
-      if(p.getPoint[0] > top.getPoint[1]){
+      if(p.getPoint()[0] > top.getPoint()[1]){
         top = p;
       }
     }
     return top;
   }
   public Point getRight(Path path){
-    Point right = new Point(0,0,null);
+    Point right = new Point(0,0,-1);
     for(Point p : path.getPoints()){
-      if(p.getPoint[1] > right.getPoint[1]){
+      if(p.getPoint()[1] > right.getPoint()[1]){
         right = p;
       }
     }
