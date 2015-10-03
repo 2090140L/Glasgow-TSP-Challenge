@@ -1,7 +1,7 @@
 public class SimulatedAnnealingAlgorithm extends Algorithm {
 
-	double temp = 1000;
-	double coolingRate = 0.01 ;
+	double temp = 1000000;
+	double coolingRate = 0.003;
 
 	public static double acceptanceProbability (double energy, double newEnergy, double temp){
 		if (newEnergy < energy){
@@ -57,13 +57,19 @@ public class SimulatedAnnealingAlgorithm extends Algorithm {
 			}
 
 			//Cooldown
-			temp -= coolingRate;
+			temp *= (1-coolingRate);
 		}
 
 	}
 
 	@Override
 	public void RunNTimes(long n){
-		System.out.println(":*");
+		while(n>0) {
+			temp = 100000;
+			RunAlgorithm();
+			super.setPath(super.getBestPath());
+			n--;
+		}
+
 	}
 }

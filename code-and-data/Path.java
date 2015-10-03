@@ -25,7 +25,7 @@ public class Path{
   }
 
   public double getDistance(){
-    double d = 0;
+    double d = path[0].getDistance(path[path.length-1]);
     for(int i = 1; i < path.length; i ++){
       d += path[i].getDistance(path[i-1]);
     }
@@ -57,7 +57,7 @@ public class Path{
   public String toString() {
     StringBuilder sb = new StringBuilder();
     for (Point p : path) {
-      sb.append(p.getID() + "\n");
+      sb.append(p.getID() + " ");
     }
     return sb.toString();
   }

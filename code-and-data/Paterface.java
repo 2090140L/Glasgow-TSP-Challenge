@@ -7,13 +7,14 @@ public class Paterface {
     // construct the Path from the origonal file
     Path path = FileReader.readFile(args[0]);
     // get the algorithm and run it
+    //System.out.println(path.toString());
     Algorithm algorithm = new SimulatedAnnealingAlgorithm(path);
     algorithm.RunAlgorithm();
     FileReader.save("test.txt", algorithm.getBestPath());
     // create a TSP
     //TSP tsp = new TSP(args[0]);
     //tsp.plot(path.getIDs());
-    System.out.println(algorithm.getBestPath().toString());
+    //System.out.println(algorithm.getBestPath().toString());
     System.out.println(algorithm.getBestPath().getDistance());
 
   }
