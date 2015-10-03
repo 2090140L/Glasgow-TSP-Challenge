@@ -10,7 +10,7 @@ public class Paterface {
 
     // create a TSP
     TSP tsp = new TSP(args[0]);
-    tsp.plot(path.getIDs);
+    tsp.plot(path.getIDs());
 
 
   }
