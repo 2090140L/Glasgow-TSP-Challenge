@@ -1,5 +1,7 @@
 *.class
 
+code-and-data/test.txt
+
 .idea/
 
 # Mobile Tools for Java (J2ME)

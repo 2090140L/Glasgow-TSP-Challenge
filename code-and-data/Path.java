@@ -1,10 +1,23 @@
 import java.lang.StringBuilder;
+import java.util.*;
+import java.io.*;
 
 public class Path{
   private Point[] path;
 
+  public Path(ArrayList<Point> array) {
+    path = new Point[array.size()];
+    for (int i=0; i < array.size(); i++) {
+      path[i] = array.get(i);
+    }
+  }
+
   public Path(Point[] path){
     this.path = path;
+  }
+
+  public Path(Path path) {
+    this.path = path.getPoints();
   }
 
   public Point[] getPoints(){
@@ -28,14 +41,14 @@ public class Path{
   }
 
   //Retrieve the size of the Path - Alex.
-  public int PathSize(){
+  public int pathSize(){
     return path.length;
   }
 
   public int[] getIDs() {
     int[] IDs = new int[path.length];
     for (int i = 0; i < IDs.length; i++) {
-      IDs[i] = path.getPoint(i).getID();
+      IDs[i] = path[i].getID();
     }
     return IDs;
   }
@@ -44,7 +57,7 @@ public class Path{
   public String toString() {
     StringBuilder sb = new StringBuilder();
     for (Point p : path) {
-      sb.add(p.getID() + "\n");
+      sb.append(p.getID() + "\n");
     }
     return sb.toString();
   }

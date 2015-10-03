@@ -43,7 +43,7 @@ public class ScrubAlgorithm extends Algorithm{
           double d1 = p.getDistance(pl1.get(0));
           double d2 = p.getDistance(pl2.get(0));
           double d3 = p.getDistance(pl3.get(0));
-          if(d1 >= d2 && d1 >= d2){
+          if(d0 >= d2 && d1 >= d2){
             pl1.append(point);
           } else if(d2 >= d1 && d2 >= d3){
             pl2.append(point);
