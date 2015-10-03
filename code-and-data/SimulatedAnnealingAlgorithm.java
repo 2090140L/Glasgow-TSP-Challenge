@@ -1,62 +1,69 @@
 public class SimulatedAnnealingAlgorithm extends Algorithm {
-	
-	double temp = 10000;
-	double coolingRate = 0.003 ; 
 
-	public static double acceptanceProbability (int energy, int newEnergy, double temp){
+	double temp = 1000;
+	double coolingRate = 0.01 ;
+
+	public static double acceptanceProbability (double energy, double newEnergy, double temp){
 		if (newEnergy < energy){
 			return 1.0;
 		}
-
 		return Math.exp((energy - newEnergy) / temp);
 	}
-	
+
 	public SimulatedAnnealingAlgorithm(Path p) {
-		System.out.println("Initial path distance: " + p.getDistance());
 		super(p);
 	}
 
-	public SimulatedAnnealingAlgorithm(Points[] p) {
+	public SimulatedAnnealingAlgorithm(Point[] p) {
 		super(p);
 	}
-
-	Path bestPath = new Path(path); //!!!!!!!!!!!
 
 	//initialize initial solution
-	public static void RunAlgorithm(){
+	public void RunAlgorithm(){
+		super.setBestPath(path);
+		int pointPos1, pointPos2;
 		while(temp>1){
-			
-			Path comparisonPath = new Path(path); //!!!!!!!!!!!
-			
+			pointPos1 = pointPos2 = 0;
+
+
+			Path comparisonPath = new Path(path);
+
 			//get random positions in the path
-			int pointPos1 = (int) (comparisonPath.pathSize() * Math.random());
-			int pointPos2 = (int) (comparisonPath.pathSize() * Math.random());
+			while (pointPos1 == 0 || pointPos2 == 0) {
+				pointPos1 = (int) (comparisonPath.pathSize() * Math.random());
+				pointPos2 = (int) (comparisonPath.pathSize() * Math.random());
+			}
+
 
 			//get the corresponding points
 			Point point1 = comparisonPath.getPoint(pointPos1);
 			Point point2 = comparisonPath.getPoint(pointPos2);
 
 			//swap the points in the comparison path.
-			comparisonPath.setPoint(pointPos1, point1);
-			comparisonPath.setPoint(pointPos2, point2);
+			comparisonPath.setPoint(pointPos1, point2);
+			comparisonPath.setPoint(pointPos2, point1);
 
 			//get distances of the original and comparisonPath.
-			int currentDistance = path.getDistance();
-			int comparisonDistance = comparisonPath.getDistance();
+			double currentDistance = path.getDistance();
+			double comparisonDistance = comparisonPath.getDistance();
 
 			//Decide which is better
 			if (acceptanceProbability(currentDistance, comparisonDistance, temp) > Math.random()){
-				super(comparisonPath); //!!!!!!!!!!!!!!
+				super.setPath(comparisonPath);
 			}
 
-			if (path.getDistance() < best.getDistance()){
-				best = new Path(path) //!!!!!!! 
+			if (path.getDistance() < bestPath.getDistance()){
+				super.setBestPath(path);
 			}
+
+			//Cooldown
+			temp -= coolingRate;
 		}
-		
-	//Cooldown
-	temp *= (1-coolingRate);
-	
+
 	}
 
+	@Override
+	public void RunNTimes(long n){
+		System.out.println(":*");
+	}
 }

@@ -10,10 +10,10 @@ public class FileReader {
     while(sc.hasNext()) {
       path.add(new Point(sc.nextInt(), sc.nextInt(), n++));
     }
-    return new Path((Point[]) path.toArray());
+    return new Path(path);
   }
 
-  public static void save(String filename, Path path) {
+  public static void save(String filename, Path path) throws IOException{
     PrintWriter writer = new PrintWriter(filename, "UTF-8");
     Point[] points = path.getPoints();
     for (Point p : points) {

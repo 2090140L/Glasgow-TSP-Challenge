@@ -11,5 +11,4 @@ public class ScrubAlgorithm extends Algorithm{
   public void RunNTimes(long n){
     this.setPath(Scrub(this.getPath()));
   }
-  public Path
 }
