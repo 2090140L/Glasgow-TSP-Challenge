@@ -13,4 +13,13 @@ public class FileReader {
     return new Path((Point[]) path.toArray());
   }
 
+  public static void save(String filename, Path path) {
+    PrintWriter writer = new PrintWriter(filename, "UTF-8");
+    Point[] points = path.getPoints();
+    for (Point p : points) {
+      writer.println(p.getID());
+    }
+    writer.close();
+  }
+
 }
