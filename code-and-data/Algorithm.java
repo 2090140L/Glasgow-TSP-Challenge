@@ -14,8 +14,5 @@ public abstract class Algorithm{
   }
   public abstract void RunAlgorithm();
   
-  //We should be able to implement this here rather than wasting time at each time
-  public void Save(){ 
-  }
   public abstract void RunNTimes(long n);
 }
