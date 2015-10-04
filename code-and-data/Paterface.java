@@ -13,11 +13,14 @@ public class Paterface {
       case 'A':
         algorithm = new SimulatedAnnealingAlgorithm(path);
         break;
+      case 'G':
+        algorithm = new GeneticAlgorithm(path);
+        break;
       case 'S':
         algorithm = new ScrubAlgorithm(path);
         break;
     }
-    algorithm.RunAlgorithm();
+    algorithm.RunNTimes(10000);
     FileReader.save(args[1] + "test.txt", algorithm.getBestPath());
     // create a TSP
     //TSP tsp = new TSP(args[0]);
