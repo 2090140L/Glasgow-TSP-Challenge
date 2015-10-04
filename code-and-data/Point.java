@@ -12,6 +12,8 @@ public class Point{
   public double[] getPoint(){
     return new double[] {x,y};
   }
+  public double getX() {return x;}
+  public double getY() {return y;}
   public int getID(){
     return id;
   }
@@ -20,5 +22,14 @@ public class Point{
     double nablaX = secondPoint[0] - this.x;
     double nablaY = secondPoint[1] - this.y;
     return Math.sqrt(nablaX*nablaX + nablaY*nablaY);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o instanceof Point) {
+      Point p = (Point)o;
+      return p.getID() == id && p.getX() == x && p.getY() == y;
+    }
+    return false;
   }
 }

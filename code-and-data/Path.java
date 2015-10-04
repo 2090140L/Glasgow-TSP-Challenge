@@ -2,7 +2,7 @@ import java.lang.StringBuilder;
 import java.util.*;
 import java.io.*;
 
-public class Path{
+public class Path {
   private Point[] path;
 
   public Path(ArrayList<Point> array) {
@@ -14,6 +14,27 @@ public class Path{
 
   public Path(Point[] path){
     this.path = path;
+  }
+
+  public Path(int n) {
+    this.path = new Point[n];
+  }
+
+  public Path shufflePath() {
+    int pointPos1, pointPos2;
+    Path newPath = duplicate();
+    for (int i = 0; i < 100; i++) {
+      pointPos1 = pointPos2 = 0;
+      while (pointPos1 == 0 || pointPos2 == 0) {
+				pointPos1 = (int) (newPath.pathSize() * Math.random());
+				pointPos2 = (int) (newPath.pathSize() * Math.random());
+			}
+			Point point1 = newPath.getPoint(pointPos1);
+      Point point2 = newPath.getPoint(pointPos2);
+      newPath.setPoint(pointPos1, point2);
+      newPath.setPoint(pointPos2, point1);
+    }
+    return newPath;
   }
 
   public Path(Path path) {
@@ -53,6 +74,16 @@ public class Path{
     return IDs;
   }
 
+  public boolean containsPoint(Point p) {
+    if (p == null) return false;
+    for(int i = 0; i < path.length; i++) {
+      if(path[i] != null && path[i].equals(p)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -62,6 +93,17 @@ public class Path{
     return sb.toString();
   }
 
+  public Path duplicate() {
+    Path newPath = new Path(pathSize());
+    for(int i=0; i < pathSize(); i++) {
+      Point point = getPoint(i);
+      newPath.setPoint(i, new Point(point.getX(), point.getY(), i));
+    }
+    return newPath;
+  }
 
+  public double getFitness() {
+    return 1/(double)getDistance();
+  }
 
 }
