@@ -4,9 +4,11 @@ public abstract class Algorithm{
 
   public Algorithm(Path path){
     this.path = path;
+    //this.bestPath = path.duplicate();
   }
   public Algorithm(Point[] points){
     this.path = new Path(points);
+    //this.bestPath = path.duplicate();
   }
   public Path getPath(){
     return this.path;
