@@ -8,10 +8,10 @@ public class ScrubAlgorithm extends Algorithm{
     super(p);
   }
   public void RunAlgorithm(){
-    this.setPath(Scrub(this.getPath()));
+    this.setBestPath(cycle(clearPath(Scrub(this.getPath())),getPath().getPoint(0)));
   }
   public void RunNTimes(long n){
-    this.setPath(Scrub(this.getPath()));
+    this.setBestPath(Scrub(this.getPath()));
   }
   public Point getCenter(Path path){
     double x = 0;
@@ -25,49 +25,49 @@ public class ScrubAlgorithm extends Algorithm{
     return new Point(x,y,-1);
   }
   public Path Scrub(Path p){
+    int s = p.pathSize();
     Path p1 = null;
     Path p2 = null;
     Path p3 = null;
     if(p.pathSize() > 3){
       Point origin = getOrigin(p);
-      Point top = getTop(p);
-      Point right = getRight(p);
+      Point top = getTop(p,origin);
+      Point right = getRight(p,origin,top);
       ArrayList<Point> pl1 = new ArrayList<Point>();
       ArrayList<Point> pl2 = new ArrayList<Point>();
       ArrayList<Point> pl3 = new ArrayList<Point>();
-      pl1.add(origin);
-      pl2.add(top);
-      pl3.add(right);
       for(Point point : p.getPoints()){
-        if(point.getID() != origin.getID() && point.getID() != top.getID() && point.getID() != right.getID()){
-          double d1 = point.getDistance(pl1.get(0));
-          double d2 = point.getDistance(pl2.get(0));
-          double d3 = point.getDistance(pl3.get(0));
-          if(d1 >= d2 && d1 >= d3){
+          double d1 = point.getDistance(origin);
+          double d2 = point.getDistance(top);
+          double d3 = point.getDistance(right);
+          if(d1 < d2 && d1 < d3){
             pl1.add(point);
-          } else if(d2 >= d1 && d2 >= d3){
+          } else if(d2 < d1 && d2 < d3){
             pl2.add(point);
           } else{
             pl3.add(point);
           }
-        }
       }
       p1 = Scrub(new Path(pl1));
+      int s1 = p1.pathSize();
       p2 = Scrub(new Path(pl2));
+      int s2 = p2.pathSize();
       p3 = Scrub(new Path(pl3));
+      int s3 = p3.pathSize();
+      System.out.println(s,s1,s2,s3);
     } else {
-      p1 = new Path(new Point[] {p.getPoints()[0]});
+      p1 = new Path(new Point[] {p.getPoint(0)});
       if(p.pathSize() > 1){
-        p2 = new Path(new Point[] {p.getPoints()[1]});
+        p2 = new Path(new Point[] {p.getPoint(1)});
       }
       if(p.pathSize() > 2){
-        p3 = new Path(new Point[] {p.getPoints()[2]});
+        p3 = new Path(new Point[] {p.getPoint(2)});
       }
     }
     if( p2 == null){
       return p1;
     } else if( p3 == null){
-      return new Path(new Point[] {p1.getPoint(0), p2.getPoint(2)});
+      return new Path(new Point[] {p1.getPoint(0), p2.getPoint(0)});
     } else {
       Point c1 = getCenter(p1);
       Point c2 = getCenter(p2);
@@ -150,7 +150,7 @@ public class ScrubAlgorithm extends Algorithm{
   }
   public Point getOrigin(Path path){
     Point O = new Point(0,0,-1);
-    Point ret = null;
+    Point ret = path.getPoint(0);
     for(Point p : path.getPoints()){
       double d = p.getDistance(O);
       if(d == 0){
@@ -162,22 +162,35 @@ public class ScrubAlgorithm extends Algorithm{
     }
     return ret;
   }
-  public Point getTop(Path path){
+  public Point getTop(Path path, Point o){
     Point top = new Point(0,0,-1);
     for(Point p : path.getPoints()){
-      if(p.getPoint()[0] > top.getPoint()[1]){
+      if(p.getPoint()[0] > top.getPoint()[1] && p.getID() != o.getID()){
         top = p;
       }
     }
     return top;
   }
-  public Point getRight(Path path){
+  public Point getRight(Path path, Point o, Point t){
     Point right = new Point(0,0,-1);
     for(Point p : path.getPoints()){
-      if(p.getPoint()[1] > right.getPoint()[1]){
+      if(p.getPoint()[1] > right.getPoint()[1] && p.getID() != o.getID() && p.getID() != t.getID()){
         right = p;
       }
     }
     return right;
+  }
+  Path clearPath(Path p){
+    ArrayList<Point> l = new ArrayList<Point>();
+    for(Point point : p.getPoints()){
+      boolean in = false;
+      for(Point poin : l){
+        in = in || poin.getID() == point.getID();
+      }
+      if(! in){
+        l.add(point);
+      }
+    }
+    return new Path(l);
   }
 }

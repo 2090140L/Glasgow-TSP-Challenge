@@ -8,9 +8,17 @@ public class Paterface {
     Path path = FileReader.readFile(args[0]);
     // get the algorithm and run it
     //System.out.println(path.toString());
-    Algorithm algorithm = new GeneticAlgorithm(path);
+    Algorithm algorithm = null;
+    switch(args[1].charAt(0)){
+      case 'A':
+        algorithm = new SimulatedAnnealingAlgorithm(path);
+        break;
+      case 'S':
+        algorithm = new ScrubAlgorithm(path);
+        break;
+    }
     algorithm.RunAlgorithm();
-    FileReader.save("test.txt", algorithm.getBestPath());
+    FileReader.save(args[1] + "test.txt", algorithm.getBestPath());
     // create a TSP
     //TSP tsp = new TSP(args[0]);
     //tsp.plot(path.getIDs());
