@@ -24,7 +24,7 @@ public class SimulatedAnnealingAlgorithm extends Algorithm {
 		while(temp>1){
 			pointPos1 = pointPos2 = 0;
 
-			Path comparisonPath = path.duplicate();
+			Path comparisonPath = path;
 
 			//get random positions in the path
 			while (pointPos1 == 0 || pointPos2 == 0) {
@@ -49,11 +49,11 @@ public class SimulatedAnnealingAlgorithm extends Algorithm {
 			double acceptanceProbabilityFactor = acceptanceProbability(currentDistance, comparisonDistance, temp);
 			//System.out.println(acceptanceProbabilityFactor);
 			if (acceptanceProbabilityFactor > Math.random()){
-				super.setPath(comparisonPath.duplicate());
+				super.setPath(comparisonPath);
 			}
 
 			if (path.getDistance() < bestPath.getDistance()){
-				super.setBestPath(comparisonPath);
+				super.setBestPath(super.getPath());
 				System.out.println(super.getBestPath().toString());
 			}
 

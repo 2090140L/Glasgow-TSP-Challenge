@@ -23,13 +23,17 @@ public class Paterface {
         algorithm = new HillClimbingAlgorithm(path);
         break;
     }
-    algorithm.RunNTimes(100000);
+    long start = System.currentTimeMillis();
+    algorithm.RunNTimes(100);
+    long end = System.currentTimeMillis();
     FileReader.save(args[1] + "test.txt", algorithm.getBestPath());
     // create a TSP
-    //TSP tsp = new TSP(args[0]);
-    //tsp.plot(path.getIDs());
-    //System.out.println(algorithm.getBestPath().toString());
-    System.out.println(algorithm.getBestPath().getDistance());
+    TSP tsp = new TSP(args[0]);
+    tsp.plot(path.getIDs());
+    long difference = (end - start) / 1000;
+    System.out.println("Time taken (s): " + difference);
+    System.out.println("Path taken: " + algorithm.getBestPath().toString());
+    System.out.println("Best: " + algorithm.getBestPath().getDistance());
 
   }
 

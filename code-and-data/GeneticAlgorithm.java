@@ -132,7 +132,7 @@ public class GeneticAlgorithm extends Algorithm {
         if (super.getBestPath().getDistance() > pop.getFittest().getDistance()) {
           super.setBestPath(pop.getFittest());
         }
-        System.out.println("Current best: " + super.getBestPath().getDistance());
+        //System.out.println("Current best: " + super.getBestPath().getDistance());
 
       }
     }
