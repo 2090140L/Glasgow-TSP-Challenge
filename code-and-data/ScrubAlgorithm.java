@@ -40,28 +40,28 @@ public class ScrubAlgorithm extends Algorithm{
           double d1 = point.getDistance(origin);
           double d2 = point.getDistance(top);
           double d3 = point.getDistance(right);
-          if(d1 < d2 && d1 < d3){
+          if(d1 <= d2 && d1 <= d3){
             pl1.add(point);
-          } else if(d2 < d1 && d2 < d3){
+          } else if(d2 <= d1 && d2 <= d3){
             pl2.add(point);
           } else{
             pl3.add(point);
           }
       }
-      p1 = Scrub(new Path(pl1));
-      int s1 = p1.pathSize();
-      p2 = Scrub(new Path(pl2));
-      int s2 = p2.pathSize();
-      p3 = Scrub(new Path(pl3));
-      int s3 = p3.pathSize();
-      System.out.println(s + "," + s1 + "," + s2 + "," + s3);
+      p1 = clearPath(Scrub(new Path(pl1)));
+      p2 = clearPath(Scrub(new Path(pl2)));
+      p3 = clearPath(Scrub(new Path(pl3)));
     } else {
       p1 = new Path(new Point[] {p.getPoint(0)});
       if(p.pathSize() > 1){
         p2 = new Path(new Point[] {p.getPoint(1)});
+      } else {
+        return p;
       }
       if(p.pathSize() > 2){
         p3 = new Path(new Point[] {p.getPoint(2)});
+      } else{
+        return new Path(new Point[] {p.getPoint(0),p.getPoint(1)});
       }
     }
     if( p2 == null){
@@ -87,7 +87,7 @@ public class ScrubAlgorithm extends Algorithm{
       } else {
         // Join 2 and 1, and 1 and 3
         pa = pathJoin(p2,p1);
-        pa = pathJoin(p1,p2);
+        pa = pathJoin(pa,p3);
       }
       return pa;
     }
