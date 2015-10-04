@@ -24,7 +24,7 @@ public class Paterface {
         break;
     }
     long start = System.currentTimeMillis();
-    algorithm.RunNTimes(100);
+    algorithm.RunNTimes(20000);
     long end = System.currentTimeMillis();
     FileReader.save(args[1] + "test.txt", algorithm.getBestPath());
     // create a TSP
