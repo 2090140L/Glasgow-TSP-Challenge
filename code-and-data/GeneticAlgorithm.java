@@ -1,7 +1,7 @@
 public class GeneticAlgorithm extends Algorithm {
 
   private static final double mutationRate = 0.015;
-  private static final int pathnamentSize = 5;
+  private static final int pathGroupSize = 5;
   private static final boolean elitism = true;
 
   public GeneticAlgorithm(Path initialPath) {
@@ -23,8 +23,8 @@ public class GeneticAlgorithm extends Algorithm {
         // Current population
         for (int i = elitismOffset; i < newPopulation.populationSize(); i++) {
             // Select parents
-            Path parent1 = pathnamentSelection(pop);
-            Path parent2 = pathnamentSelection(pop);
+            Path parent1 = pathGroupSelection(pop);
+            Path parent2 = pathGroupSelection(pop);
             // Crossover parents
             Path child = crossover(parent1, parent2);
             // Add child to new population
@@ -99,17 +99,17 @@ public class GeneticAlgorithm extends Algorithm {
     }
 
     // Selects candidate path for crossover
-    private static Path pathnamentSelection(Population pop) {
-        // Create a pathnament population
-        Population pathnament = new Population(pathnamentSize);
-        // For each place in the pathnament get a random candidate path and
+    private static Path pathGroupSelection(Population pop) {
+        // Create a path population
+        Population paths = new Population(pathGroupSize);
+        // For each place in the paths get a random candidate path and
         // add it
-        for (int i = 0; i < pathnamentSize; i++) {
+        for (int i = 0; i < pathGroupSize; i++) {
             int randomId = (int) (Math.random() * pop.populationSize());
-            pathnament.savePath(i, pop.getPath(randomId));
+            paths.savePath(i, pop.getPath(randomId));
         }
         // Get the fittest path
-        Path fittest = pathnament.getFittest();
+        Path fittest = paths.getFittest();
         return fittest;
     }
 
