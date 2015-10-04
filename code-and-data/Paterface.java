@@ -20,12 +20,12 @@ public class Paterface {
         algorithm = new ScrubAlgorithm(path);
         break;
     }
-    algorithm.RunNTimes(10000);
+    algorithm.RunNTimes(100);
     FileReader.save(args[1] + "test.txt", algorithm.getBestPath());
     // create a TSP
     //TSP tsp = new TSP(args[0]);
     //tsp.plot(path.getIDs());
-    //System.out.println(algorithm.getBestPath().toString());
+    System.out.println(algorithm.getBestPath().toString());
     System.out.println(algorithm.getBestPath().getDistance());
 
   }

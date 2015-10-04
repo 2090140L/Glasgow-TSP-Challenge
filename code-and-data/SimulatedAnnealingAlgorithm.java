@@ -1,6 +1,6 @@
 public class SimulatedAnnealingAlgorithm extends Algorithm {
 
-	double temp = 100000;
+	double temp = 10000;
 	double coolingRate = 0.003;
 
 	public static double acceptanceProbability (double energy, double newEnergy, double temp){
@@ -20,12 +20,11 @@ public class SimulatedAnnealingAlgorithm extends Algorithm {
 
 	//initialize initial solution
 	public void RunAlgorithm(){
-		super.setBestPath(path.duplicate());
 		int pointPos1, pointPos2;
 		while(temp>1){
 			pointPos1 = pointPos2 = 0;
 
-			Path comparisonPath = new Path(path.duplicate());
+			Path comparisonPath = path.duplicate();
 
 			//get random positions in the path
 			while (pointPos1 == 0 || pointPos2 == 0) {
@@ -54,7 +53,8 @@ public class SimulatedAnnealingAlgorithm extends Algorithm {
 			}
 
 			if (path.getDistance() < bestPath.getDistance()){
-				super.setBestPath(path.duplicate());
+				super.setBestPath(comparisonPath);
+				System.out.println(super.getBestPath().toString());
 			}
 
 			//Cooldown
@@ -65,13 +65,10 @@ public class SimulatedAnnealingAlgorithm extends Algorithm {
 
 	@Override
 	public void RunNTimes(long n){
+		super.setBestPath(path.shufflePath());
 		while(n>0) {
 			temp = 100000;
 			RunAlgorithm();
-			if (n%1000 == 0){
-				System.out.println(bestPath.getDistance());
-			}
-			//super.setPath(super.getBestPath());
 			n--;
 		}
 
