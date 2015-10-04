@@ -54,7 +54,7 @@ public class ScrubAlgorithm extends Algorithm{
       int s2 = p2.pathSize();
       p3 = Scrub(new Path(pl3));
       int s3 = p3.pathSize();
-      System.out.println(s,s1,s2,s3);
+      System.out.println(s + "," + s1 + "," + s2 + "," + s3);
     } else {
       p1 = new Path(new Point[] {p.getPoint(0)});
       if(p.pathSize() > 1){
