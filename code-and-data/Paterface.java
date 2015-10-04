@@ -19,6 +19,9 @@ public class Paterface {
       case 'S':
         algorithm = new ScrubAlgorithm(path);
         break;
+      case 'H':
+        algorithm = new HillClimbingAlgorithm(path);
+        break;
     }
     algorithm.RunNTimes(10000);
     FileReader.save(args[1] + "test.txt", algorithm.getBestPath());

@@ -17,8 +17,8 @@ public class HillClimbingAlgorithm extends Algorithm{
   public Path search(Point p){
     Point current = p;
     ArrayList<Point> newPath = new ArrayList<Point>();
+    newPath.add(current);
     while(newPath.size() < this.getPath().pathSize()){
-      double Lowest = -1;
       Point chosen = null;
       for(Point pa : this.getPath().getPoints()){
         if( ! in(pa, newPath) && chosen == null){
@@ -27,7 +27,7 @@ public class HillClimbingAlgorithm extends Algorithm{
           chosen = pa;
         }
       }
-      newPath.add(current);
+      newPath.add(chosen);
       current = chosen;
     }
     newPath.add(current);
