@@ -123,11 +123,11 @@ public class GeneticAlgorithm extends Algorithm {
   }
 
   public void RunNTimes(long n) {
-    Population pop = new Population(100, super.getPath());
+    Population pop = new HighLangPopulaion(super.getPath().pathSize(), super.getPath());
     super.setBestPath(super.getPath());
     for (int i=0; i < n; i++) {
       pop = GeneticAlgorithm.evolvePopulation(pop);
-      if (i % 1000 == 0) {
+      if (i % 10 == 0) {
 
         if (super.getBestPath().getDistance() > pop.getFittest().getDistance()) {
           super.setBestPath(pop.getFittest());

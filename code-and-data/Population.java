@@ -1,7 +1,7 @@
 public class Population {
 
     // Holds population of tours
-    Path[] paths;
+    protected Path[] paths;
 
     // Construct a population
     public Population(int populationSize, Path path) {
