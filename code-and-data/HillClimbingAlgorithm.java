@@ -12,7 +12,15 @@ public class HillClimbingAlgorithm extends Algorithm{
     this.setBestPath(search(this.getPath().getPoint(0)));
   }
   public void RunNTimes(long n){
-    RunAlgorithm();
+    int u = this.getPath().pathSize();
+    Path pa = search(this.getPath().getPoint(0));
+    for(int i = 0; i < u; i ++){
+      Path pat = rotate(search(this.getPath().getPoint(i)));
+      if(pat.getDistance() < pa.getDistance()){
+        pa = pat;
+      }
+    }
+    this.setBestPath(pa);
   }
   public Path search(Point p){
     Point current = p;
@@ -30,7 +38,6 @@ public class HillClimbingAlgorithm extends Algorithm{
       newPath.add(chosen);
       current = chosen;
     }
-    newPath.add(current);
     return new Path(newPath);
   }
   public boolean in(Point p, ArrayList<Point> l){
@@ -40,5 +47,24 @@ public class HillClimbingAlgorithm extends Algorithm{
       }
     }
     return false;
+  }
+  public Path rotate(Path p){
+    int count = 0;
+    boolean found = false;
+    ArrayList<Point> l = new ArrayList<Point>();
+    for(Point point : p.getPoints()){
+      if(point.getID() == 0){
+        found = true;
+      }
+      if( ! found){
+        count ++;
+      } else {
+        l.add(point);
+      }
+    }
+    for(int i = 0; i < count; i ++){
+      l.add(p.getPoint(i));
+    }
+    return new Path(l);
   }
 }
